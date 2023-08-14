@@ -1,17 +1,16 @@
 
 resource "aws_db_instance" "rds_instance" {
-  allocated_storage    = 20
-  storage_type        = "gp2"
-  engine              = "mysql"
-  engine_version      = "5.7"
-  instance_class      = "db.t2.micro"
-  name                = var.db_instance_identifier
-  username            = "admin"
-  password            = "your_password_here"
+ engine               = "mysql"
+  identifier           = "myrdsinstance"
+  allocated_storage    =  20
+  engine_version       = "5.7"
+  instance_class       = "db.t2.micro"
+  username             = "myrdsuser"
+  password             = var.db_password
   parameter_group_name = "default.mysql5.7"
-
-  
-
+  //vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
+  skip_final_snapshot  = true
+  publicly_accessible =  true
   tags = {
     Name = "lms-test-rds"
   }

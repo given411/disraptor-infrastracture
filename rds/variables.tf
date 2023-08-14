@@ -1,11 +1,7 @@
-variable "db_instance_identifier" {
-  description = "Identifier for the RDS instance"
+variable "db_password" {
+  description = "db password"
   type        = string
 }
 
-variable "db_name" {
-  description = "Name of the initial database"
-  type        = string
-}
 
 # to add more for dynamic use-cases
