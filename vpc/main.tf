@@ -1,9 +1,4 @@
 
-
-provider "aws" {
-  region = "us-east-1"
-}
-
 # vpc
 resource "aws_vpc" "lms" {
   cidr_block = var.vpc_cidr_block
