@@ -1,6 +1,3 @@
-provider "aws" {
-  region = "us-east-1"  # Update this to your desired region
-}
 
 resource "aws_db_instance" "rds_instance" {
   allocated_storage    = 20
@@ -13,10 +10,10 @@ resource "aws_db_instance" "rds_instance" {
   password            = "your_password_here"
   parameter_group_name = "default.mysql5.7"
 
-  # You can customize the above attributes and add more as needed
+  
 
   tags = {
-    Name = "MyRDSInstance"
+    Name = "lms-test-rds"
   }
 }
 # to add more for dynamic use-cases
