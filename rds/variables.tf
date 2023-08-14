@@ -1,7 +1,13 @@
-variable "db_instance_identifier" {
-  description = "db db_instance_identifier"
-  type        = string
+
+variable "db_password" {
+    description = "database password"
+    type = string
 }
 
+variable "db_name" {
+    description = "database name"
+    type = string
+  
+}
 
-# to add more for dynamic use-cases
+# to add more for dynamic use-case
