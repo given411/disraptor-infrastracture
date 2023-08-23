@@ -56,8 +56,6 @@ variable "cluster_identifier" {
   default     = ""
 }
 
-# cluster_parameter_group_name -> see parameter group section
-# cluster_subnet_group_name -> see subnet group section
 
 variable "cluster_version" {
   description = "The version of the Amazon Redshift engine software that you want to deploy on the cluster. The version selected runs on all the nodes in the cluster"

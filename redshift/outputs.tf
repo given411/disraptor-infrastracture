@@ -1,6 +1,5 @@
-################################################################################
+
 # Cluster
-################################################################################
 
 output "cluster_arn" {
   description = "The Redshift cluster ARN"
@@ -111,9 +110,7 @@ output "cluster_nodes" {
   value       = try(aws_redshift_cluster.this[0].cluster_nodes, {})
 }
 
-################################################################################
 # Parameter Group
-################################################################################
 
 output "parameter_group_arn" {
   description = "Amazon Resource Name (ARN) of the parameter group created"
@@ -125,9 +122,7 @@ output "parameter_group_id" {
   value       = try(aws_redshift_parameter_group.this[0].id, null)
 }
 
-################################################################################
 # Subnet Group
-################################################################################
 
 output "subnet_group_arn" {
   description = "Amazon Resource Name (ARN) of the Redshift subnet group created"
@@ -139,18 +134,14 @@ output "subnet_group_id" {
   value       = try(aws_redshift_subnet_group.this[0].id, null)
 }
 
-################################################################################
 # Snapshot Schedule
-################################################################################
 
 output "snapshot_schedule_arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Snapshot Schedule"
   value       = try(aws_redshift_snapshot_schedule.this[0].arn, null)
 }
 
-################################################################################
 # Scheduled Action
-################################################################################
 
 output "scheduled_actions" {
   description = "A map of maps containing scheduled action details"
@@ -172,9 +163,7 @@ output "scheduled_action_iam_role_unique_id" {
   value       = try(aws_iam_role.scheduled_action[0].unique_id, null)
 }
 
-################################################################################
 # Endpoint Access
-################################################################################
 
 output "endpoint_access_address" {
   description = "The DNS address of the endpoint"
@@ -196,18 +185,14 @@ output "endpoint_access_vpc_endpoint" {
   value       = try(aws_redshift_endpoint_access.this[0].vpc_endpoint, null)
 }
 
-################################################################################
 # Usage Limit
-################################################################################
 
 output "usage_limits" {
   description = "Map of usage limits created and their associated attributes"
   value       = aws_redshift_usage_limit.this
 }
 
-################################################################################
 # Authentication Profile
-################################################################################
 
 output "authentication_profiles" {
   description = "Map of authentication profiles created and their associated attributes"

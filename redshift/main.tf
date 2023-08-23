@@ -12,9 +12,7 @@ resource "random_password" "master_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-################################################################################
 # Cluster
-################################################################################
 
 locals {
   subnet_group_name    = var.create && var.create_subnet_group ? aws_redshift_subnet_group.this[0].name : var.subnet_group_name
@@ -44,7 +42,6 @@ resource "aws_redshift_cluster" "this" {
   final_snapshot_identifier            = var.skip_final_snapshot ? null : var.final_snapshot_identifier
   kms_key_id                           = var.kms_key_arn
 
-  # iam_roles and default_iam_roles are managed in the aws_redshift_cluster_iam_roles resource below
 
   dynamic "logging" {
     for_each = can(var.logging.enable) ? [var.logging] : []
@@ -97,9 +94,8 @@ resource "aws_redshift_cluster" "this" {
   }
 }
 
-################################################################################
+
 # IAM Roles
-################################################################################
 
 resource "aws_redshift_cluster_iam_roles" "this" {
   count = var.create && length(var.iam_role_arns) > 0 ? 1 : 0
@@ -109,9 +105,8 @@ resource "aws_redshift_cluster_iam_roles" "this" {
   default_iam_role_arn = var.default_iam_role_arn
 }
 
-################################################################################
 # Parameter Group
-################################################################################
+
 
 resource "aws_redshift_parameter_group" "this" {
   count = var.create && var.create_parameter_group ? 1 : 0
@@ -131,9 +126,8 @@ resource "aws_redshift_parameter_group" "this" {
   tags = merge(var.tags, var.parameter_group_tags)
 }
 
-################################################################################
+
 # Subnet Group
-################################################################################
 
 resource "aws_redshift_subnet_group" "this" {
   count = var.create && var.create_subnet_group ? 1 : 0
@@ -145,9 +139,8 @@ resource "aws_redshift_subnet_group" "this" {
   tags = merge(var.tags, var.subnet_group_tags)
 }
 
-################################################################################
+
 # Snapshot Schedule
-################################################################################
 
 resource "aws_redshift_snapshot_schedule" "this" {
   count = var.create && var.create_snapshot_schedule ? 1 : 0
@@ -168,9 +161,8 @@ resource "aws_redshift_snapshot_schedule_association" "this" {
   schedule_identifier = aws_redshift_snapshot_schedule.this[0].id
 }
 
-################################################################################
 # Scheduled Action
-################################################################################
+
 
 locals {
   iam_role_name = coalesce(var.iam_role_name, "${var.cluster_identifier}-scheduled-action")
@@ -273,10 +265,8 @@ resource "aws_iam_role_policy" "scheduled_action" {
   policy = data.aws_iam_policy_document.scheduled_action[0].json
 }
 
-################################################################################
-# Endpoint Access
-################################################################################
 
+# Endpoint Access
 resource "aws_redshift_endpoint_access" "this" {
   count = var.create && var.create_endpoint_access ? 1 : 0
 
@@ -288,9 +278,7 @@ resource "aws_redshift_endpoint_access" "this" {
   vpc_security_group_ids = var.endpoint_vpc_security_group_ids
 }
 
-################################################################################
 # Usage Limit
-################################################################################
 
 resource "aws_redshift_usage_limit" "this" {
   for_each = { for k, v in var.usage_limits : k => v if var.create }
@@ -306,9 +294,8 @@ resource "aws_redshift_usage_limit" "this" {
   tags = merge(var.tags, try(each.value.tags, {}))
 }
 
-################################################################################
+
 # Authentication Profile
-################################################################################
 
 resource "aws_redshift_authentication_profile" "this" {
   for_each = { for k, v in var.authentication_profiles : k => v if var.create }
